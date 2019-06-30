@@ -13,8 +13,12 @@ const ReservationResponder = async (chrome: Browser) => {
   return {
     async exectute() {
       try {
+        logger.info('start reservation responder!');
+
         const oldReservations = await file.readReservationsList();
         const newReservations = await mailReader.getMailBodys();
+
+        logger.info(`new mails are ${JSON.stringify(newReservations)}`);
 
         await airbnb.login();
 
@@ -35,6 +39,8 @@ const ReservationResponder = async (chrome: Browser) => {
         await file.updateReservationsList(
           unionBy(oldReservations, newReservations, 'reservationCode'),
         );
+
+        logger.info('end reservation responder!');
       } catch (error) {
         logger.error(error.stack);
       }

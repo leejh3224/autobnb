@@ -8,6 +8,8 @@ const CheckInReminder = async (chrome: Browser) => {
   return {
     async execute() {
       try {
+        logger.info('start check-in reminder!');
+
         const airbnb = await Airbnb(chrome);
         const file = File();
 
@@ -20,6 +22,8 @@ const CheckInReminder = async (chrome: Browser) => {
           isAfter(new Date(reservation.endDate), new Date()),
         );
         await file.updateReservationsList(newReservations);
+
+        logger.info('end check-in reminder!');
       } catch (error) {
         logger.error(error.stack);
       }
