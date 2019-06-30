@@ -1,8 +1,7 @@
-import { format, parse } from 'date-fns';
-import koLocale from 'date-fns/locale/ko';
 import imap from 'imap-simple';
 import { simpleParser } from 'mailparser';
 import { IReservation } from './types';
+import dayjs from './utils/dayjs';
 
 const MailReader = async () => {
   const user = process.env['imap.user'] as string;
@@ -22,15 +21,27 @@ const MailReader = async () => {
 
   await connection.openBox('AIRBNB');
 
-  const result = await connection.search(['UNSEEN'], {
+  const result = await connection.search(['ALL'], {
     bodies: ['TEXT'],
-    markSeen: true,
   });
+
+  const filterOldMails = (date: Date) => {
+    const interval = parseInt(
+      process.env['reservation-responder.interval'] as string,
+      10,
+    );
+    const receivedAt = dayjs(date);
+    const now = dayjs(new Date());
+    const basis = now.subtract(interval, 'minute');
+
+    return basis.unix() < receivedAt.unix() && now.unix() > receivedAt.unix();
+  };
 
   const transformMailBodys = (): string[] => {
     return result
-      .map(res => {
-        return res.parts
+      .filter(body => filterOldMails(body.attributes.date))
+      .map(body => {
+        return body.parts
           .filter(part => part.which === 'TEXT')
           .map(part => part.body);
       })
@@ -44,14 +55,11 @@ const MailReader = async () => {
     if (matched && matched.length >= 2) {
       const [startDate, endDate] = matched;
 
-      const parseDate = (date: string) =>
-        parse(date, 'yyyy년 MM월 dd일', new Date(), {
-          locale: koLocale,
-        });
-
       return {
-        startDate: format(parseDate(startDate), 'yyyy-MM-dd'),
-        endDate: format(parseDate(endDate), 'yyyy-MM-dd'),
+        startDate: dayjs(startDate, 'YYYY년 M월 D일', 'ko').format(
+          'YYYY-MM-DD',
+        ),
+        endDate: dayjs(endDate, 'YYYY년 M월 D일', 'ko').format('YYYY-MM-DD'),
       };
     } else {
       throw new Error('예약 날짜를 찾을 수 없습니다.');

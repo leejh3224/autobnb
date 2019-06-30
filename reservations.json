@@ -180,6 +180,12 @@
     "roomId": "32050698"
   },
   {
+    "reservationCode": "HMAKWR49P2",
+    "startDate": "2019-07-13",
+    "endDate": "2019-07-14",
+    "roomId": "30923304"
+  },
+  {
     "reservationCode": "HMAD2BB5XY",
     "startDate": "2019-07-18",
     "endDate": "2019-07-19",
@@ -244,6 +250,12 @@
     "startDate": "2019-07-22",
     "endDate": "2019-07-26",
     "roomId": "33443644"
+  },
+  {
+    "reservationCode": "HMARMQTFNE",
+    "startDate": "2019-07-23",
+    "endDate": "2019-07-25",
+    "roomId": "32050698"
   },
   {
     "reservationCode": "HMAMK2YSJX",
@@ -420,6 +432,12 @@
     "roomId": "31765470"
   },
   {
+    "reservationCode": "HMACTSTTAN",
+    "startDate": "2019-08-03",
+    "endDate": "2019-08-06",
+    "roomId": "34123213"
+  },
+  {
     "reservationCode": "HMAPTHX9BB",
     "startDate": "2019-08-03",
     "endDate": "2019-08-04",
@@ -435,6 +453,12 @@
     "reservationCode": "HMADSZMNZ3",
     "startDate": "2019-08-03",
     "endDate": "2019-08-04",
+    "roomId": "29767093"
+  },
+  {
+    "reservationCode": "HMAF22JB8K",
+    "startDate": "2019-08-05",
+    "endDate": "2019-08-07",
     "roomId": "29767093"
   },
   {

@@ -1,6 +1,6 @@
-import { isSameDay } from 'date-fns';
 import { Browser, Page } from 'puppeteer';
 import { IReservation, IReservationStatus } from './types';
+import dayjs from './utils/dayjs';
 import detectLanguage from './utils/detectLanguage';
 import logger from './utils/logger';
 import Message from './utils/messages';
@@ -15,12 +15,14 @@ const Airbnb = async (chrome: Browser) => {
   const loginUrl = 'https://www.airbnb.com/login';
   const messageUrl = 'https://www.airbnb.com/messaging/qt_for_reservation';
 
-  const getStatus = (startDate: Date, endDate: Date) => {
-    const now = new Date();
+  const getStatus = (startDate: string, endDate: string) => {
+    const now = dayjs(new Date());
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
 
-    if (isSameDay(startDate, now)) {
+    if (now.isSame(start, 'day')) {
       return 'check-in';
-    } else if (isSameDay(endDate, now)) {
+    } else if (now.isSame(end, 'day')) {
       return 'check-out';
     }
     return 'no-message';
@@ -89,7 +91,7 @@ const Airbnb = async (chrome: Browser) => {
       if (!startDate || !endDate) {
         status = 'reservation-confirmed';
       } else {
-        status = getStatus(new Date(startDate), new Date(endDate));
+        status = getStatus(startDate, endDate);
       }
 
       const messages = Message.get(status, roomId)[language];
