@@ -18,11 +18,6 @@ const ReservationResponder = async (chrome: Browser) => {
         const oldReservations = await file.readReservationsList();
         const newReservations = await mailReader.getMailBodys();
 
-        if (!newReservations.length) {
-          logger.info('end reservation responder!');
-          return;
-        }
-
         logger.info(`new mails are ${JSON.stringify(newReservations)}`);
 
         await airbnb.login();
