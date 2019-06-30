@@ -27,6 +27,11 @@ const ReservationResponder = async (chrome: Browser) => {
             .map(airbnb.sendMessage),
         );
 
+        // when saving don't save type
+        newReservations.forEach(reservation => {
+          delete reservation.type;
+        });
+
         await file.updateReservationsList(
           unionBy(oldReservations, newReservations, 'reservationCode'),
         );
