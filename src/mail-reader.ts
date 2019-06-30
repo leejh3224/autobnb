@@ -2,6 +2,7 @@ import imap from 'imap-simple';
 import { simpleParser } from 'mailparser';
 import { IReservation } from './types';
 import dayjs from './utils/dayjs';
+import logger from './utils/logger';
 
 const MailReader = async () => {
   const user = process.env['imap.user'] as string;
@@ -33,6 +34,8 @@ const MailReader = async () => {
     const receivedAt = dayjs(date);
     const now = dayjs(new Date());
     const basis = now.subtract(interval, 'minute');
+
+    logger.info(`receivedAt: ${receivedAt}, basis: ${basis}`);
 
     return basis.unix() < receivedAt.unix() && now.unix() > receivedAt.unix();
   };
