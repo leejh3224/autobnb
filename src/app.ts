@@ -41,7 +41,7 @@ const Server = () => {
       const reservationResponderInterval =
         process.env['reservation-responder.interval'];
 
-      cron.schedule('12 8 * * *', checkInReminder.execute, schedulerOptions);
+      cron.schedule('42 7 * * *', checkInReminder.execute, schedulerOptions);
       cron.schedule(
         `*/${reservationResponderInterval} * * * *`,
         reservationResponder.exectute,
