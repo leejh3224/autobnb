@@ -22,8 +22,9 @@ const MailReader = async () => {
 
   await connection.openBox('AIRBNB');
 
-  const result = await connection.search(['ALL'], {
+  const result = await connection.search(['UNSEEN'], {
     bodies: ['TEXT'],
+    markSeen: true,
   });
 
   const checkIsNewMail = (date: Date) => {
