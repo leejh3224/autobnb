@@ -16,7 +16,14 @@ const CheckInReminder = async (chrome: Browser) => {
         await airbnb.login();
 
         const oldReservations = await file.readReservationsList();
-        await Promise.all(oldReservations.map(airbnb.sendMessage));
+        const willCheckInOrOut = oldReservations.filter(reservation => {
+          const now = dayjs(new Date());
+          const start = dayjs(reservation.startDate!);
+          const end = dayjs(reservation.endDate!);
+
+          return now.isSame(start, 'day') || now.isSame(end, 'day');
+        });
+        await Promise.all(willCheckInOrOut.map(airbnb.sendMessage));
 
         const newReservations = oldReservations.filter(reservation => {
           const end = dayjs(reservation.endDate!);
