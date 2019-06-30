@@ -19,7 +19,7 @@ const CheckInReminder = async (chrome: Browser) => {
         await Promise.all(oldReservations.map(airbnb.sendMessage));
 
         const newReservations = oldReservations.filter(reservation =>
-          isAfter(new Date(reservation.endDate), new Date()),
+          isAfter(new Date(reservation.endDate!), new Date()),
         );
         await file.updateReservationsList(newReservations);
 

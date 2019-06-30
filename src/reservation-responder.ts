@@ -22,19 +22,17 @@ const ReservationResponder = async (chrome: Browser) => {
 
         await airbnb.login();
 
-        await Promise.all(
-          newReservations
-            .map(reservation => ({
-              ...reservation,
-              type: 'reservation-confirmed',
-            }))
-            .map(airbnb.sendMessage),
+        /**
+         * don't need to derive users checkin status based on `startDate` and `endDate`
+         * when user made reservation
+         */
+        const reservationsWithoutPeriod = newReservations.map(
+          ({ startDate, endDate, ...rest }) => {
+            return rest;
+          },
         );
 
-        // when saving don't save type
-        newReservations.forEach(reservation => {
-          delete reservation.type;
-        });
+        await Promise.all(reservationsWithoutPeriod.map(airbnb.sendMessage));
 
         await file.updateReservationsList(
           unionBy(oldReservations, newReservations, 'reservationCode'),

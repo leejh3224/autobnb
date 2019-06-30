@@ -1,4 +1,4 @@
-import { format, isAfter, parse, subMinutes } from 'date-fns';
+import { format, parse } from 'date-fns';
 import koLocale from 'date-fns/locale/ko';
 import imap from 'imap-simple';
 import { simpleParser } from 'mailparser';
@@ -27,19 +27,8 @@ const MailReader = async () => {
     markSeen: true,
   });
 
-  const checkIsNewMail = (date: Date) => {
-    const reservationResponderInterval = process.env[
-      'reservation-responder.interval'
-    ] as string;
-    return isAfter(
-      date,
-      subMinutes(new Date(), parseInt(reservationResponderInterval, 10)),
-    );
-  };
-
   const transformMailBodys = (): string[] => {
     return result
-      .filter(res => checkIsNewMail(res.attributes.date))
       .map(res => {
         return res.parts
           .filter(part => part.which === 'TEXT')
@@ -83,15 +72,15 @@ const MailReader = async () => {
   };
 
   const checkRoomId = (text: string) => {
-    const matchRoomName = /포항 영일대 해수욕장 도보5분 [A-Z0-9]{2} Joy's Cozy House/;
-    const matched = text.match(matchRoomName);
+    const matchRoomId = /https:\/\/www.airbnb.co.kr\/rooms\/([0-9]{8})/;
+    const matched = text.match(matchRoomId);
 
-    if (matched) {
+    if (matched && matched.length >= 2) {
       return {
-        roomId: matched[0],
+        roomId: matched[1],
       };
     } else {
-      throw new Error('숙소 이름을 찾을 수 없습니다.');
+      throw new Error('숙소 ID를 찾을 수 없습니다.');
     }
   };
 

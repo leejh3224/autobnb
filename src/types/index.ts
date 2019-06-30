@@ -6,10 +6,9 @@ export type IReservationStatus =
 
 export interface IReservation {
   reservationCode: string;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   roomId: string;
-  type?: string;
 }
 
 /**

@@ -73,7 +73,6 @@ const Airbnb = async (chrome: Browser) => {
       startDate,
       endDate,
       roomId,
-      type,
     }: IReservation) {
       const $sendMessageTextarea = '#send_message_textarea';
       const $messageSubmitButton = 'button[type="submit"]';
@@ -87,7 +86,7 @@ const Airbnb = async (chrome: Browser) => {
 
       let status: IReservationStatus;
 
-      if (type === 'reservation-confirmed') {
+      if (!startDate || !endDate) {
         status = 'reservation-confirmed';
       } else {
         status = getStatus(new Date(startDate), new Date(endDate));
@@ -103,8 +102,7 @@ const Airbnb = async (chrome: Browser) => {
       await page.close();
 
       logger.info(
-        `${startDate} ~ ${endDate} 예약 번호 ${reservationCode}에 대해 ${type ||
-          status} 메시지를 전송했습니다.`,
+        `${startDate} ~ ${endDate} 예약 번호 ${reservationCode}에 대해 ${status} 메시지를 전송했습니다.`,
       );
     },
   };
