@@ -5,3 +5,4 @@ userDataDir
 .env
 .vscode
 service-account-key.json
+nvm
