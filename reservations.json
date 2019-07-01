@@ -1,4 +1,10 @@
-﻿[
+[
+  {
+    "startDate": "2019-07-01",
+    "endDate": "2019-07-02",
+    "reservationCode": "HMAQACFSSZ",
+    "roomId": "27092267"
+  },
   {
     "reservationCode": "HMAAAPCHMB",
     "startDate": "2019-07-02",
@@ -16,6 +22,12 @@
     "startDate": "2019-07-02",
     "endDate": "2019-07-03",
     "roomId": "32050698"
+  },
+  {
+    "startDate": "2019-07-03",
+    "endDate": "2019-07-04",
+    "reservationCode": "HMAD2KZ3TM",
+    "roomId": "27092267"
   },
   {
     "reservationCode": "HMAA5SPSQA",

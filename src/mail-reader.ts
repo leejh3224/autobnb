@@ -21,14 +21,17 @@ const MailReader = async () => {
 
   await connection.openBox('AIRBNB');
 
-  const result = await connection.search(['UNSEEN'], {
+  const result = await connection.search(['ALL'], {
     bodies: ['TEXT'],
   });
 
   const transformMailBodys = async (): Promise<string[]> => {
     const transformPromises = await Promise.all(
       result.map(async message => {
-        await connection.addFlags(message.attributes.uid.toString(), 'Seen');
+        await connection.moveMessage(
+          message.attributes.uid.toString(),
+          'Trash',
+        );
         return message.parts
           .filter(part => part.which === 'TEXT')
           .map(part => part.body);

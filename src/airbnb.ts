@@ -98,10 +98,17 @@ const Airbnb = async (chrome: Browser) => {
 
       for await (const msg of messages) {
         await page.type($sendMessageTextarea, msg);
-        // await page.click($messageSubmitButton);
+        await page.click($messageSubmitButton);
       }
 
       await page.close();
+
+      if (!startDate || !endDate) {
+        logger.info(
+          `예약 번호 ${reservationCode}에 대해 ${status} 메시지를 전송했습니다.`,
+        );
+        return;
+      }
 
       logger.info(
         `${startDate} ~ ${endDate} 예약 번호 ${reservationCode}에 대해 ${status} 메시지를 전송했습니다.`,
