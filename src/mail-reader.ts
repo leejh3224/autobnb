@@ -33,11 +33,8 @@ const MailReader = async () => {
     );
     const receivedAt = dayjs(date);
     const now = dayjs(new Date());
-    const basis = now.subtract(interval, 'minute');
 
-    logger.info(`receivedAt: ${receivedAt}, basis: ${basis}`);
-
-    return basis.unix() < receivedAt.unix() && now.unix() > receivedAt.unix();
+    return receivedAt.isAfter(now.subtract(interval, 'minute'));
   };
 
   const transformMailBodys = (): string[] => {
