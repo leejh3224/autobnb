@@ -1,5 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const HappyPack = require('happypack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -12,7 +14,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: 'happypack/loader',
         exclude: /node_modules/,
       },
     ],
@@ -27,4 +29,25 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+    ],
+  },
+  plugins: [
+    new HappyPack({
+      loaders: [
+        {
+          loader: 'ts-loader',
+          options: {
+            happyPackMode: true,
+          },
+        },
+      ],
+      threads: 1,
+    }),
+  ],
 };

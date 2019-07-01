@@ -93,7 +93,7 @@ const MailReader = async () => {
   };
 
   return {
-    getMailBodys(): Promise<IReservation[]> {
+    async getMailBodys(): Promise<IReservation[]> {
       const mailBodys = transformMailBodys();
       return Promise.all(
         mailBodys.map(async body => {

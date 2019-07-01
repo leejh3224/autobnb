@@ -2,6 +2,8 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const webpack = require('webpack');
+const HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -16,7 +18,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: 'happypack/loader',
         exclude: /node_modules/,
       },
     ],
@@ -37,6 +39,7 @@ module.exports = {
     sourceMapFilename: '[name].js.map',
   },
   plugins: [
+    new webpack.WatchIgnorePlugin([path.resolve('reservations.json')]),
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install();',
       raw: true,
@@ -47,6 +50,18 @@ module.exports = {
       ext: 'js,json',
       watch: path.resolve(__dirname, 'dist'),
       script: path.resolve(__dirname, 'dist/app.js'),
+    }),
+    new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+    new HappyPack({
+      loaders: [
+        {
+          loader: 'ts-loader',
+          options: {
+            happyPackMode: true,
+          },
+        },
+      ],
+      threads: 1,
     }),
   ],
 };
