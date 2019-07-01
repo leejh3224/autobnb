@@ -17,11 +17,11 @@ const MailReader = async () => {
     },
   };
 
-  const connection = await imap.connect(config);
-
-  await connection.openBox('AIRBNB');
-
   const transformMailBodys = async (): Promise<string[]> => {
+    const connection = await imap.connect(config);
+
+    await connection.openBox('AIRBNB');
+
     const result = await connection.search(['ALL'], {
       bodies: ['TEXT'],
     });
@@ -36,8 +36,6 @@ const MailReader = async () => {
           .map(part => part.body);
       }),
     );
-
-    console.log(transformPromises);
 
     return transformPromises.reduce((acc, val) => acc.concat(val), []);
   };
