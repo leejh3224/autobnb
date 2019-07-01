@@ -22,6 +22,7 @@
     "lodash.unionby": "^4.8.0",
     "mailparser": "^2.7.1",
     "node-cron": "^2.0.3",
+    "p-limit": "^2.2.0",
     "puppeteer": "^1.18.0",
     "winston": "^3.2.1"
   },

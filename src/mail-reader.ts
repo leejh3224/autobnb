@@ -2,7 +2,6 @@ import imap from 'imap-simple';
 import { simpleParser } from 'mailparser';
 import { IReservation } from './types';
 import dayjs from './utils/dayjs';
-import logger from './utils/logger';
 
 const MailReader = async () => {
   const user = process.env['imap.user'] as string;
@@ -22,30 +21,21 @@ const MailReader = async () => {
 
   await connection.openBox('AIRBNB');
 
-  const result = await connection.search(['ALL'], {
+  const result = await connection.search(['UNSEEN'], {
     bodies: ['TEXT'],
   });
 
-  const filterOldMails = (date: Date) => {
-    const interval = parseInt(
-      process.env['reservation-responder.interval'] as string,
-      10,
-    );
-    const receivedAt = dayjs(date);
-    const now = dayjs(new Date());
-
-    return receivedAt.isAfter(now.subtract(interval, 'minute'));
-  };
-
-  const transformMailBodys = (): string[] => {
-    return result
-      .filter(body => filterOldMails(body.attributes.date))
-      .map(body => {
-        return body.parts
+  const transformMailBodys = async (): Promise<string[]> => {
+    const transformPromises = await Promise.all(
+      result.map(async message => {
+        await connection.addFlags(message.attributes.uid.toString(), 'Seen');
+        return message.parts
           .filter(part => part.which === 'TEXT')
           .map(part => part.body);
-      })
-      .reduce((acc, val) => acc.concat(val), []);
+      }),
+    );
+
+    return transformPromises.reduce((acc, val) => acc.concat(val), []);
   };
 
   const checkPeriod = (text: string) => {
@@ -94,7 +84,7 @@ const MailReader = async () => {
 
   return {
     async getMailBodys(): Promise<IReservation[]> {
-      const mailBodys = transformMailBodys();
+      const mailBodys = await transformMailBodys();
       return Promise.all(
         mailBodys.map(async body => {
           const { text } = await simpleParser(body);

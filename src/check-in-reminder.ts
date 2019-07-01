@@ -1,3 +1,4 @@
+import pLimit from 'p-limit';
 import { Browser } from 'puppeteer';
 import Airbnb from './airbnb';
 import dayjs from './utils/dayjs';
@@ -23,7 +24,14 @@ const CheckInReminder = async (chrome: Browser) => {
 
           return now.isSame(start, 'day') || now.isSame(end, 'day');
         });
-        await Promise.all(willCheckInOrOut.map(airbnb.sendMessage));
+
+        const MAX_CHROME_TABS = 5;
+        const concurrent = pLimit(MAX_CHROME_TABS);
+        const sendMessagePromises = willCheckInOrOut.map(reservation =>
+          concurrent(() => airbnb.sendMessage(reservation)),
+        );
+
+        await Promise.all(sendMessagePromises);
 
         const newReservations = oldReservations.filter(reservation => {
           const end = dayjs(reservation.endDate!);

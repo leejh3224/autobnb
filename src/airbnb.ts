@@ -98,7 +98,7 @@ const Airbnb = async (chrome: Browser) => {
 
       for await (const msg of messages) {
         await page.type($sendMessageTextarea, msg);
-        await page.click($messageSubmitButton);
+        // await page.click($messageSubmitButton);
       }
 
       await page.close();
