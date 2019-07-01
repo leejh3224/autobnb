@@ -22,7 +22,7 @@ const MailReader = async () => {
 
     await connection.openBox('AIRBNB');
 
-    const result = await connection.search(['ALL'], {
+    const result = await connection.search(['UNSEEN'], {
       bodies: ['TEXT'],
     });
     const transformPromises = await Promise.all(
