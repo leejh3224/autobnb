@@ -24,7 +24,7 @@ const CheckInReminder = async (chrome: Browser) => {
           return now.isSame(start, 'day') || now.isSame(end, 'day');
         };
 
-        const MAX_CHROME_TABS = 5;
+        const MAX_CHROME_TABS = 3;
         const concurrent = pLimit(MAX_CHROME_TABS);
         const sendMessagePromises = reservations
           .filter(filterCheckInOrOut)

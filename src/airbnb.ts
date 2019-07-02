@@ -93,6 +93,8 @@ const Airbnb = async (chrome: Browser) => {
 
       const { reservations } = await response.json();
 
+      await page.close();
+
       interface IAirbnbReservationsResponse {
         confirmation_code: string;
         start_date: string;
