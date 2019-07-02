@@ -70,6 +70,49 @@ const Airbnb = async (chrome: Browser) => {
 
       await page.close();
     },
+    async getReservations(): Promise<IReservation[]> {
+      const reservationsUrl =
+        'https://www.airbnb.com/hosting/reservations/upcoming';
+
+      const page = await chrome.newPage();
+
+      await page.goto(reservationsUrl);
+
+      const reservationsResponse = await page.waitForResponse(
+        response => {
+          return (
+            response
+              .url()
+              .startsWith('https://www.airbnb.com/api/v2/reservations') &&
+            response.status() === 200
+          );
+        },
+        { timeout: 100000 },
+      );
+
+      const { reservations } = await reservationsResponse.json();
+
+      interface IAirbnbReservationsResponse {
+        confirmation_code: string;
+        start_date: string;
+        end_date: string;
+        listing_id: number;
+      }
+
+      return reservations.map(
+        ({
+          confirmation_code: reservationCode,
+          start_date: startDate,
+          end_date: endDate,
+          listing_id: roomId,
+        }: IAirbnbReservationsResponse) => ({
+          reservationCode,
+          startDate,
+          endDate,
+          roomId,
+        }),
+      );
+    },
     async sendMessage({
       reservationCode,
       startDate,
