@@ -76,21 +76,24 @@ const Airbnb = async (chrome: Browser) => {
 
       const page = await chrome.newPage();
 
-      await page.goto(reservationsUrl);
+      const [, response] = await Promise.all([
+        page.goto(reservationsUrl),
+        page.waitForResponse(
+          response => {
+            return (
+              response
+                .url()
+                .startsWith('https://www.airbnb.com/api/v2/reservations') &&
+              response.status() === 200
+            );
+          },
+          { timeout: 10000 },
+        ),
+      ]);
 
-      const reservationsResponse = await page.waitForResponse(
-        response => {
-          return (
-            response
-              .url()
-              .startsWith('https://www.airbnb.com/api/v2/reservations') &&
-            response.status() === 200
-          );
-        },
-        { timeout: 100000 },
-      );
+      const { reservations } = await response.json();
 
-      const { reservations } = await reservationsResponse.json();
+      await page.close();
 
       interface IAirbnbReservationsResponse {
         confirmation_code: string;
