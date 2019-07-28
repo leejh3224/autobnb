@@ -17,6 +17,8 @@ const Message = {
             오늘은 체크인하는 날이에요. (입실 : 15시)
             다시 한번 셀프 체크인 가이드를 확인해주세요.
 
+            주소: 포항시 북구 삼호로253번길 17-5 필오피스텔
+
             궁금한 점이 있으신가요?
             에어비앤비 메시지를 통해서 호스트와 빠르게 소통하세요~!
 
@@ -29,6 +31,8 @@ const Message = {
           stripIndents`
             It's check in day today!
             Please check in after 3:00 PM.
+
+            Address: 17-5, Samho-ro 253beon-gil, Buk-gu, Pohang-si
 
             Do you have questions?
             Please leave an Airbnb message.
