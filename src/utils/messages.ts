@@ -3,7 +3,8 @@ import { IReservationStatus } from '../types';
 
 const Message = {
   get(status: IReservationStatus, roomId: string) {
-    const selfCheckInGuideUrl = 'https://airbnb.kr/reservation/check-in-guide';
+    const selfCheckInGuideUrl =
+      'https://airbnb.co.kr/reservation/check-in-guide';
 
     const messageMap = {
       'no-message': {
@@ -84,7 +85,7 @@ const Message = {
             * 숙소 기본 정보 *
             숙소 주소는 위 메세지 참조
             숙소의 기본적인 정보가 궁금하신가요?
-            (https://airbnb.kr/rooms/${roomId})
+            (https://airbnb.co.kr/rooms/${roomId})
             - 건물 1층 무료 주차장 이용 가능
             - 여분 침구류 제공
             - 체크인 시간 2시간 전부터 짐 두고 가셔도 됩니다 ^^
