@@ -4,7 +4,7 @@ import { IReservationStatus } from '../types';
 const Message = {
   get(status: IReservationStatus, roomId: string) {
     const selfCheckInGuideUrl =
-      'https://www.airbnb.com/reservation/check-in-guide';
+      'https://airbnb.kr/reservation/check-in-guide';
 
     const messageMap = {
       'no-message': {
