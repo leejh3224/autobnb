@@ -3,8 +3,7 @@ import { IReservationStatus } from '../types';
 
 const Message = {
   get(status: IReservationStatus, roomId: string) {
-    const selfCheckInGuideUrl =
-      'https://airbnb.kr/reservation/check-in-guide';
+    const selfCheckInGuideUrl = 'https://airbnb.kr/reservation/check-in-guide';
 
     const messageMap = {
       'no-message': {
@@ -25,6 +24,8 @@ const Message = {
             전화 연락은 어려울 수 있습니다.
             그럼 즐거운 여행이 되시길 바래요~!!
             ${selfCheckInGuideUrl}/${roomId}
+
+            ** 만약 폰에서 링크가 열리지 않는다면 링크를 크롬/삼성 인터넷 주소창에 붙여넣기 해보세요 **
             `,
         ],
         en: [
