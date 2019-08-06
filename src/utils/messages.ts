@@ -24,9 +24,8 @@ const Message = {
 
             전화 연락은 어려울 수 있습니다.
             그럼 즐거운 여행이 되시길 바래요~!!
-            ${selfCheckInGuideUrl}/${roomId}
 
-            ** 만약 폰에서 링크가 열리지 않는다면 링크를 크롬/삼성 인터넷 주소창에 붙여넣기 해보세요 **
+            링크: ${selfCheckInGuideUrl}/${roomId}
             `,
         ],
         en: [
@@ -47,17 +46,17 @@ const Message = {
       'check-out': {
         ko: [
           stripIndents`
-            여행은 즐거우셨나요? ^^
+            여행은 즐거우셨나요?
             체크아웃은 11시까지에요.
-
-            퇴실전에 기본적인 뒷정리 부탁드리고, 
-            놓고 가는 물건이 없는 지 한번 더 체크해보세요~
-        
+            
+            퇴실 전에 기본적인 뒷정리를 해주시고
+            놓고 가는 물건이 없는지 다시 한번 확인해주세요.
+            11시에 청소가 시작되니 체크아웃 시간은 꼭 지켜주세요.
+            지연에 따른 추가 비용이 청구될 수 있습니다.
+            
             그리고 높은 평점, 좋은 후기를 적어주시면 
-            감사의 뜻으로 ₩10,000을 돌려드리는 이벤트를 진행하고 있어요~ ^^
-      
-            체크아웃 몇 시간 뒤에 [후기 작성] 알림이 오면 
-            후기 작성하시고 메세지 남겨주세요~
+            감사의 뜻으로 ₩10,000을 돌려드리는 이벤트를 진행하고 있어요.
+            [후기 작성] 알림이 오면,  작성후  메세지 남겨주세요.
             `,
         ],
         en: [
@@ -67,6 +66,7 @@ const Message = {
 
             Before you leave, please clean up and 
             make sure you take all your belongings with you.
+            Please be aware that additional fee can be charged for late checkout.
 
             And if your leave good review, we'll pay you ₩10,000 back :)
             Leave a review and send us Airbnb message.
@@ -77,29 +77,21 @@ const Message = {
       'reservation-confirmed': {
         ko: [
           stripIndents`
+            게스트님 안녕하세요.
+            숙소 이용안내 드립니다.
+            
+            - 주소(아래 메세지 참고)
+            - 체크인: 3시부터
+              체크아웃 : 11시 (미준수시 추가 비용 발생)
+            - 건물 1층 무료주차
+            - 숙소 위치/비밀번호/이용 방법 
+              (체크인 3일전부터 확인 가능, 필독↓↓)
+            `,
+          stripIndents`
             포항시 북구 삼호로253번길 17-5 필오피스텔
             `,
           stripIndents`
-            안녕하세요 게스트님 ^^
-    
-            * 숙소 기본 정보 *
-            숙소 주소는 위 메세지 참조
-            숙소의 기본적인 정보가 궁금하신가요?
-            (https://airbnb.co.kr/rooms/${roomId})
-            - 건물 1층 무료 주차장 이용 가능
-            - 여분 침구류 제공
-            - 체크인 시간 2시간 전부터 짐 두고 가셔도 됩니다 ^^
-
-            * 체크인 / 체크아웃 *
-            체크인: 오후 3시부터
-            체크아웃: 오전 11시까지
-            (숙소 정리를 위해 체크아웃 시간을 지켜주세요^^)
-
-            약도 / 체크인 / 비밀번호 / 숙소 이용 / 맛집 안내는 
-            아래 링크를 통해 체크인 3일 전부터 확인 가능합니다.
-            ${selfCheckInGuideUrl}/${roomId}
-
-            ** 만약 폰에서 링크가 열리지 않는다면 링크를 크롬/삼성 인터넷 주소창에 붙여넣기 해보세요 **
+            링크: ${selfCheckInGuideUrl}/${roomId}
             `,
         ],
         en: [
